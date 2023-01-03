@@ -45,6 +45,16 @@ app.put('/livros/:id',(req, res) =>{
     res.status(200).json(livros);
 })
 
+// Deleta um livro em especifico a apartir de um id
+app.delete('/livros/:id',(req, res) =>{
+    let { id } = req.params;
+    let index = buscaLivro(id);
+    
+    livros.splice(index,1);
+
+    res.status(200).json(`Livro ${id} removido com sucesso!`);
+})
+
 
 // Metodo para buscar livros a partir do id
 function buscaLivro(id){
