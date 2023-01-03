@@ -23,11 +23,32 @@ app.get('/livros',(req,res) =>{
     res.status(200).json(livros)
 })
 
+// Retorna um livro em especifico a apartir de um id
+app.get('/livros/:id',(req, res) =>{
+    let index = buscaLivro(req.params.id);
+    res.status(200).json(livros[index]);
+})
+
+
 // Cria uma rota POST em /livros que adiciona um novo livro ao array de livros com base no corpo da requisição e retorna uma mensagem de sucesso
 app.post('/livros',(req, res) =>{
     livros.push(req.body);
     res.status(201).send('O livro foi cadastrado com sucesso');
 })
 
+// Atualiza o titulo de um livro em especifico a apartir de um id
+app.put('/livros/:id',(req, res) =>{
+    let index = buscaLivro(req.params.id);
+    
+    livros[index].title = req.body.title;
+
+    res.status(200).json(livros);
+})
+
+
+// Metodo para buscar livros a partir do id
+function buscaLivro(id){
+    return livros.findIndex(livro => livro.id == id);
+}
 // Exporta o aplicativo express
 export default app;
